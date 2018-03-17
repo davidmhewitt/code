@@ -74,6 +74,19 @@ namespace Scratch.FolderManager {
             write_settings ();
         }
 
+        public string? get_root_path_for_file (string path) {
+            foreach (var item in root.children) {
+                if (item is Item) {
+                    var code_item = item as Item;
+                    if (path.has_prefix (code_item.path)) {
+                        return code_item.path;
+                    }
+                }
+            }
+
+            return null;
+        }
+
         public void select_path (string path) {
             selected = find_path (root, path);
         }

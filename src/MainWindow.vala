@@ -32,7 +32,6 @@ namespace Scratch {
         private Gtk.Revealer search_revealer;
         public Scratch.Widgets.SearchBar search_bar;
         public Scratch.Widgets.SplitView split_view;
-        private FolderManager.FileView folder_manager_view;
 
         // Plugins
         private Scratch.Services.PluginsManager plugins;
@@ -41,6 +40,7 @@ namespace Scratch {
         public Gtk.Notebook contextbar;
         public Gtk.Notebook bottombar;
         public Code.Pane project_pane;
+        public FolderManager.FileView folder_manager_view;
 
         private Gtk.Dialog? preferences_dialog = null;
         private Gtk.Paned hp1;
