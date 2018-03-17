@@ -22,9 +22,6 @@ peas_dep = dependency('libpeas-1.0')
 peasgtk_dep = dependency('libpeas-gtk-1.0')
 posix_dep = meson.get_compiler('vala').find_library('posix')
 
-
-langserver_dep = dependency('langserver-glib', fallback : ['langserver-glib', 'langserver_dep'])
-
 code_resources = gnome.compile_resources(
     'code-resources', 'data/' + meson.project_name() + '.gresource.xml',
     source_dir: 'data'
@@ -40,9 +37,6 @@ dependencies = [
     peas_dep,
     peasgtk_dep,
     posix_dep,
-    dependency('json-glib-1.0'),
-    dependency('jsonrpc-glib-1.0'),
-    langserver_dep
 ]
 
 if gtksourceview_dep.version().version_compare('>=3.18')

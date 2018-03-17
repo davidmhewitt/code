@@ -1,0 +1,9 @@
+[Plugin]
+Module=vala-language-client
+Loader=C
+IAge=2
+Name=Vala Language Client
+Description=Vala diagnostics, formatting and completion support
+Authors=David Hewitt <davidmhewitt@gmail.com>
+Copyright=Copyright © 2018 David Hewitt
+Website=https://github.com/elementary/code
