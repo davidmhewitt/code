@@ -56,6 +56,7 @@ public class Scratch.Plugins.ValaLanguageClient : Peas.ExtensionBase,  Peas.Acti
                     latest_document[root_uri] = doc;
 
                     var client = new LanguageServer.Client ("com.github.davidmhewitt.vls");
+                    client.diagnostics_published.connect (on_diagnostics_published);
 
                     var initialize_params = new LanguageServer.Types.InitializeParams () {
                         rootUri = root_uri
@@ -92,6 +93,13 @@ public class Scratch.Plugins.ValaLanguageClient : Peas.ExtensionBase,  Peas.Acti
         };
 
         clients[root_uri].did_open.begin (item);
+    }
+
+    private void on_diagnostics_published (string uri, Gee.ArrayList<LanguageServer.Types.Diagnostic> diagnostics) {
+        var current_uri = window.split_view.get_current_view ().current_document.file.get_uri ();
+        if (uri == current_uri && diagnostics.size > 0) {
+            
+        }
     }
 }
 
