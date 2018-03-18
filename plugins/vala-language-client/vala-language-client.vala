@@ -1,40 +1,97 @@
-// -*- Mode: vala; indent-tabs-mode: nil; tab-width: 4 -*-
-/***
-  BEGIN LICENSE
-
-  Copyright (C) 2013 Mario Guerriero <mario@elementaryos.org>
-  This program is free software: you can redistribute it and/or modify it
-  under the terms of the GNU Lesser General Public License version 3, as published
-  by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranties of
-  MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
-  PURPOSE.  See the GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program.  If not, see <http://www.gnu.org/licenses/>
-
-  END LICENSE
-***/
+/*-
+ * Copyright (c) 2018 elementary LLC. (https://elementary.io)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Authored by: David Hewitt <davidmhewitt@gmail.com>
+ */
 
 public class Scratch.Plugins.ValaLanguageClient : Peas.ExtensionBase,  Peas.Activatable {
 
     Scratch.Services.Interface plugins;
+    Scratch.MainWindow window;
     public Object object { owned get; construct; }
+
+    private Gee.HashMap<string, LanguageServer.Client> clients = new Gee.HashMap<string, LanguageServer.Client> ();
+    private Gee.ArrayList<string> initializing_clients = new Gee.ArrayList<string> ();
+    private Gee.HashMap<string, Scratch.Services.Document> latest_document = new Gee.HashMap<string, Scratch.Services.Document> ();
+    private Gee.HashMap<string, int> versions = new Gee.HashMap<string, int> ();
 
     public void update_state () {}
 
     public void activate () {
         plugins = (Scratch.Services.Interface) object;
         plugins.hook_document.connect (on_hook_document);
+        plugins.hook_window.connect ((w) => {
+            this.window = w;
+        });
     }
 
     public void deactivate () {
         plugins.hook_document.disconnect (on_hook_document);
+        foreach (var client in clients.values) {
+            client.exit ();
+        }
     }
 
     void on_hook_document (Scratch.Services.Document doc) {
+        if (doc.get_language_name () == "Vala") {
+            versions[doc.file.get_uri ()] = 1;
+            var root_path = window.folder_manager_view.get_root_path_for_file (doc.file.get_path ());
+            if (root_path != null) {
+                var root_uri = File.new_for_path (root_path).get_uri ();
+                if (!(root_uri in initializing_clients) && !clients.has_key (root_uri)) {
+                    initializing_clients.add (root_uri);
+                    latest_document[root_uri] = doc;
+
+                    var client = new LanguageServer.Client ("com.github.davidmhewitt.vls");
+
+                    var initialize_params = new LanguageServer.Types.InitializeParams () {
+                        rootUri = root_uri
+                    };
+
+                    client.initialize.begin (initialize_params, (o, res) => {
+                        try {
+                            var result = client.initialize.end (res);
+                            clients[root_uri] = client;
+                            fire_did_open (root_uri);
+                        } catch (Error e) {
+                            warning ("error initializing language server: %s", e.message);
+                        }
+                    });
+                } else {
+                    if (doc != latest_document[root_uri]) {
+                        latest_document[root_uri] = doc;
+                        if (clients.has_key (root_uri)) {
+                            fire_did_open (root_uri);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void fire_did_open (string root_uri) {
+        var file_uri = latest_document[root_uri].file.get_uri ();
+        var item = new LanguageServer.Types.TextDocumentItem () {
+            uri = file_uri,
+            languageId = "vala",
+            number = versions[file_uri],
+            text = latest_document[root_uri].source_view.buffer.text
+        };
+
+        clients[root_uri].did_open.begin (item);
     }
 }
 
