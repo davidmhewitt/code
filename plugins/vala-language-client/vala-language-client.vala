@@ -96,9 +96,28 @@ public class Scratch.Plugins.ValaLanguageClient : Peas.ExtensionBase,  Peas.Acti
     }
 
     private void on_diagnostics_published (string uri, Gee.ArrayList<LanguageServer.Types.Diagnostic> diagnostics) {
-        var current_uri = window.split_view.get_current_view ().current_document.file.get_uri ();
+        var current_document = window.split_view.get_current_view ().current_document;
+        var current_uri = current_document.file.get_uri ();
         if (uri == current_uri && diagnostics.size > 0) {
-            
+            var buffer = current_document.source_view.buffer;
+            Gtk.TextIter start, end;
+            buffer.get_start_iter (out start);
+            buffer.get_end_iter (out end);
+            buffer.remove_tag_by_name ("warning_bg", start, end);
+            buffer.remove_tag_by_name ("error_bg", start, end);
+
+            foreach (var problem in diagnostics) {
+                var problem_start = problem.range.start;
+                var problem_end = problem.range.end;
+                buffer.get_iter_at_line_offset (out start, problem_start.line, problem_start.character);
+                buffer.get_iter_at_line_offset (out end, problem_end.line, problem_end.character);
+
+                if (problem.severity == LanguageServer.Types.DiagnosticSeverity.Error) {
+                    buffer.apply_tag_by_name ("error_bg", start, end);
+                } else if (problem.severity == LanguageServer.Types.DiagnosticSeverity.Warning) {
+                    buffer.apply_tag_by_name ("warning_bg", start, end);
+                }
+            }
         }
     }
 }
