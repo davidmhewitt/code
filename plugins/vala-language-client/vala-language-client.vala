@@ -104,14 +104,18 @@ public class Scratch.Plugins.ValaLanguageClient : Peas.ExtensionBase,  Peas.Acti
 
         this.diagnostics[uri] = diagnostics;
 
-        if (uri == current_uri && diagnostics.size > 0) {
-            var buffer = current_document.source_view.buffer;
-            Gtk.TextIter start, end;
-            buffer.get_start_iter (out start);
-            buffer.get_end_iter (out end);
-            buffer.remove_tag_by_name ("warning_bg", start, end);
-            buffer.remove_tag_by_name ("error_bg", start, end);
+        if (uri != current_uri) {
+            return;
+        }
 
+        var buffer = current_document.source_view.buffer;
+        Gtk.TextIter start, end;
+        buffer.get_start_iter (out start);
+        buffer.get_end_iter (out end);
+        buffer.remove_tag_by_name ("warning_bg", start, end);
+        buffer.remove_tag_by_name ("error_bg", start, end);
+
+        if (diagnostics.size > 0) {
             foreach (var problem in diagnostics) {
                 var problem_start = problem.range.start;
                 var problem_end = problem.range.end;
