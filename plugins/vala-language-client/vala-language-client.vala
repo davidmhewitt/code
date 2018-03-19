@@ -48,6 +48,8 @@ public class Scratch.Plugins.ValaLanguageClient : Peas.ExtensionBase,  Peas.Acti
 
     void on_hook_document (Scratch.Services.Document doc) {
         if (doc.get_language_name () == "Vala") {
+            update_diagnostics ();
+
             versions[doc.file.get_uri ()] = 1;
             var root_path = window.folder_manager_view.get_root_path_for_file (doc.file.get_path ());
             if (root_path != null) {
@@ -98,13 +100,14 @@ public class Scratch.Plugins.ValaLanguageClient : Peas.ExtensionBase,  Peas.Acti
         clients[root_uri].did_open.begin (item);
     }
 
-    private void on_diagnostics_published (string uri, Gee.ArrayList<LanguageServer.Types.Diagnostic> diagnostics) {
+    private void update_diagnostics () {
         var current_document = window.split_view.get_current_view ().current_document;
+        if (current_document == null) {
+            return;
+        }
+
         var current_uri = current_document.file.get_uri ();
-
-        this.diagnostics[uri] = diagnostics;
-
-        if (uri != current_uri) {
+        if (current_document.source_view == null) {
             return;
         }
 
@@ -115,8 +118,8 @@ public class Scratch.Plugins.ValaLanguageClient : Peas.ExtensionBase,  Peas.Acti
         buffer.remove_tag_by_name ("warning_bg", start, end);
         buffer.remove_tag_by_name ("error_bg", start, end);
 
-        if (diagnostics.size > 0) {
-            foreach (var problem in diagnostics) {
+        if (diagnostics[current_uri].size > 0) {
+            foreach (var problem in diagnostics[current_uri]) {
                 var problem_start = problem.range.start;
                 var problem_end = problem.range.end;
                 buffer.get_iter_at_line_offset (out start, problem_start.line, problem_start.character);
@@ -129,6 +132,19 @@ public class Scratch.Plugins.ValaLanguageClient : Peas.ExtensionBase,  Peas.Acti
                 }
             }
         }
+    }
+
+    private void on_diagnostics_published (string uri, Gee.ArrayList<LanguageServer.Types.Diagnostic> diagnostics) {
+        var current_document = window.split_view.get_current_view ().current_document;
+        var current_uri = current_document.file.get_uri ();
+
+        this.diagnostics[uri] = diagnostics;
+
+        if (uri != current_uri) {
+            return;
+        }
+
+        update_diagnostics ();
     }
 
     private bool on_query_tooltip (int x, int y, bool keyboard_tooltip, Gtk.Tooltip tooltip) {
