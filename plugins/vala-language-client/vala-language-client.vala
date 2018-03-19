@@ -27,6 +27,7 @@ public class Scratch.Plugins.ValaLanguageClient : Peas.ExtensionBase,  Peas.Acti
     private Gee.ArrayList<string> initializing_clients = new Gee.ArrayList<string> ();
     private Gee.HashMap<string, Scratch.Services.Document> latest_document = new Gee.HashMap<string, Scratch.Services.Document> ();
     private Gee.HashMap<string, int> versions = new Gee.HashMap<string, int> ();
+    private Gee.HashMap<string, Gee.ArrayList<LanguageServer.Types.Diagnostic>> diagnostics = new Gee.HashMap<string, Gee.ArrayList<LanguageServer.Types.Diagnostic>> ();
 
     public void update_state () {}
 
@@ -50,6 +51,8 @@ public class Scratch.Plugins.ValaLanguageClient : Peas.ExtensionBase,  Peas.Acti
             versions[doc.file.get_uri ()] = 1;
             var root_path = window.folder_manager_view.get_root_path_for_file (doc.file.get_path ());
             if (root_path != null) {
+                doc.source_view.query_tooltip.connect (on_query_tooltip);
+
                 var root_uri = File.new_for_path (root_path).get_uri ();
                 if (!(root_uri in initializing_clients) && !clients.has_key (root_uri)) {
                     initializing_clients.add (root_uri);
@@ -98,6 +101,9 @@ public class Scratch.Plugins.ValaLanguageClient : Peas.ExtensionBase,  Peas.Acti
     private void on_diagnostics_published (string uri, Gee.ArrayList<LanguageServer.Types.Diagnostic> diagnostics) {
         var current_document = window.split_view.get_current_view ().current_document;
         var current_uri = current_document.file.get_uri ();
+
+        this.diagnostics[uri] = diagnostics;
+
         if (uri == current_uri && diagnostics.size > 0) {
             var buffer = current_document.source_view.buffer;
             Gtk.TextIter start, end;
@@ -119,6 +125,47 @@ public class Scratch.Plugins.ValaLanguageClient : Peas.ExtensionBase,  Peas.Acti
                 }
             }
         }
+    }
+
+    private bool on_query_tooltip (int x, int y, bool keyboard_tooltip, Gtk.Tooltip tooltip) {
+        var current_document = window.split_view.get_current_view ().current_document;
+        var current_uri = current_document.file.get_uri ();
+        var source_view = current_document.source_view;
+
+        if (!diagnostics.has_key (current_uri) || diagnostics[current_uri].size == 0) {
+            return false;
+        }
+
+        int buffer_x, buffer_y;
+        Gtk.TextIter hover_iter;
+        source_view.window_to_buffer_coords (Gtk.TextWindowType.WIDGET, x, y, out buffer_x, out buffer_y);
+        source_view.get_iter_at_location (out hover_iter, buffer_x, buffer_y);
+
+        debug (hover_iter.get_line ().to_string ());
+        debug (hover_iter.get_line_offset ().to_string ());
+
+        foreach (var diagnostic in diagnostics[current_uri]) {
+            if (hover_iter.get_line () < diagnostic.range.start.line) {
+                continue;
+            }
+
+            if (hover_iter.get_line () > diagnostic.range.end.line) {
+                continue;
+            }
+
+            if (hover_iter.get_line_offset () < diagnostic.range.start.character) {
+                continue;
+            }
+
+            if (hover_iter.get_line_offset () > diagnostic.range.end.character) {
+                continue;
+            }
+
+            tooltip.set_text (diagnostic.message);
+            return true;
+        }
+
+        return false;
     }
 }
 
