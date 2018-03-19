@@ -145,9 +145,6 @@ public class Scratch.Plugins.ValaLanguageClient : Peas.ExtensionBase,  Peas.Acti
         source_view.window_to_buffer_coords (Gtk.TextWindowType.WIDGET, x, y, out buffer_x, out buffer_y);
         source_view.get_iter_at_location (out hover_iter, buffer_x, buffer_y);
 
-        debug (hover_iter.get_line ().to_string ());
-        debug (hover_iter.get_line_offset ().to_string ());
-
         foreach (var diagnostic in diagnostics[current_uri]) {
             if (hover_iter.get_line () < diagnostic.range.start.line) {
                 continue;
