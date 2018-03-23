@@ -28,7 +28,7 @@ public class Scratch.Plugins.ValaLanguageClient : Peas.ExtensionBase,  Peas.Acti
     private Gee.HashMap<string, Scratch.Services.Document> latest_document = new Gee.HashMap<string, Scratch.Services.Document> ();
     private Gee.HashMap<string, int> versions = new Gee.HashMap<string, int> ();
     private Gee.HashMap<string, Gee.ArrayList<LanguageServer.Types.Diagnostic>> diagnostics = new Gee.HashMap<string, Gee.ArrayList<LanguageServer.Types.Diagnostic>> ();
-
+    private Gee.HashMap<string, ulong> changed_signals = new Gee.HashMap<string, ulong> ();
     public void update_state () {}
 
     public void activate () {
@@ -50,15 +50,20 @@ public class Scratch.Plugins.ValaLanguageClient : Peas.ExtensionBase,  Peas.Acti
         if (doc.get_language_name () == "Vala") {
             update_diagnostics ();
 
-            versions[doc.file.get_uri ()] = 1;
+            var uri = doc.file.get_uri ();
+            if (!versions.has_key (uri)) {
+                versions[uri] = 1;
+            }
+
             var root_path = window.folder_manager_view.get_root_path_for_file (doc.file.get_path ());
             if (root_path != null) {
                 doc.source_view.query_tooltip.connect (on_query_tooltip);
-
                 var root_uri = File.new_for_path (root_path).get_uri ();
                 if (!(root_uri in initializing_clients) && !clients.has_key (root_uri)) {
                     initializing_clients.add (root_uri);
+                    unbind_changed (root_uri);
                     latest_document[root_uri] = doc;
+                    bind_changed (root_uri);
 
                     var client = new LanguageServer.Client ("com.github.davidmhewitt.vls");
                     client.diagnostics_published.connect (on_diagnostics_published);
@@ -78,7 +83,10 @@ public class Scratch.Plugins.ValaLanguageClient : Peas.ExtensionBase,  Peas.Acti
                     });
                 } else {
                     if (doc != latest_document[root_uri]) {
+                        unbind_changed (root_uri);
                         latest_document[root_uri] = doc;
+                        bind_changed (root_uri);
+
                         if (clients.has_key (root_uri)) {
                             fire_did_open (root_uri);
                         }
@@ -98,6 +106,38 @@ public class Scratch.Plugins.ValaLanguageClient : Peas.ExtensionBase,  Peas.Acti
         };
 
         clients[root_uri].did_open.begin (item);
+    }
+
+    private void bind_changed (string root_uri) {
+        var doc = latest_document[root_uri];
+        var uri = doc.file.get_uri ();
+
+        changed_signals[root_uri] = doc.source_view.buffer.changed.connect (() => {
+            if (clients.has_key (root_uri)) {
+                versions[uri] = versions[uri] + 1;
+                var change = new LanguageServer.Types.TextDocumentContentChangeEvent () {
+                    rangeLength = doc.source_view.buffer.text.length,
+                    text = doc.source_view.buffer.text
+                };
+
+                var params = new LanguageServer.Types.DidChangeTextDocumentParams () {
+                    textDocument = new LanguageServer.Types.VersionedTextDocumentIdentifier () {
+                        uri = uri,
+                        version = versions[uri]
+                    },
+                    contentChanges = new Gee.ArrayList<LanguageServer.Types.TextDocumentContentChangeEvent> ()
+                };
+
+                params.contentChanges.add (change);
+                clients[root_uri].did_change (params);
+            }
+        });
+    }
+
+    private void unbind_changed (string root_uri) {
+        if (changed_signals.has_key (root_uri)) {
+            latest_document [root_uri].source_view.buffer.disconnect (changed_signals [root_uri]);
+        }
     }
 
     private void update_diagnostics () {
