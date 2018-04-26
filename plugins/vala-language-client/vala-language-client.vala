@@ -65,7 +65,7 @@ public class Scratch.Plugins.ValaLanguageClient : Peas.ExtensionBase,  Peas.Acti
                     latest_document[root_uri] = doc;
                     bind_changed (root_uri);
 
-                    var client = new LanguageServer.Client ("com.github.davidmhewitt.vls");
+                    var client = new LanguageServer.Client.from_file_pipes ("/tmp/langserver-stdin", "/tmp/langserver-stdout");
                     client.diagnostics_published.connect (on_diagnostics_published);
 
                     var initialize_params = new LanguageServer.Types.InitializeParams () {
