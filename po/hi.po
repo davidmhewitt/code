@@ -7,36 +7,36 @@ msgid ""
 msgstr ""
 "Project-Id-Version: scratch\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-17 11:34-0700\n"
-"PO-Revision-Date: 2018-05-11 06:16+0000\n"
-"Last-Translator: Anand Kumar <anand@anandkumar.net>\n"
+"POT-Creation-Date: 2018-10-18 14:12-0700\n"
+"PO-Revision-Date: 2018-10-28 00:05+0000\n"
+"Last-Translator: Prachi Joshi <josprachi@yahoo.com>\n"
 "Language-Team: Hindi <https://weblate.elementary.io/projects/code/code/hi/>\n"
 "Language: hi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.18\n"
+"X-Generator: Weblate 3.0.1\n"
 "X-Launchpad-Export-Date: 2017-05-03 06:02+0000\n"
 
 #. We list some common errors for quick feedback
-#: src/Application.vala:142
+#: src/Application.vala:138
 msgid "Maybe you do not have the necessary permissions."
 msgstr "शायद आपके पास आवश्यक अनुमति नहीं है।"
 
-#: src/Application.vala:144
+#: src/Application.vala:140
 msgid "Maybe the file path provided is not valid."
 msgstr "हो सकता है कि उपलब्ध फ़ाइल पथ वैध नहीं है।"
 
-#: src/Application.vala:146
+#: src/Application.vala:142
 msgid "The location is read-only."
 msgstr "यह स्थान केवल पठनीय है।"
 
-#: src/Application.vala:148
+#: src/Application.vala:144
 msgid "The parent directory doesn't exist."
 msgstr "मूल निर्देशिका मौजूद नहीं है।"
 
-#: src/Application.vala:155
+#: src/Application.vala:151
 #, c-format
 msgid ""
 "File \"%s\" cannot be created.\n"
@@ -45,7 +45,7 @@ msgstr ""
 "फ़ाइल \"%s\" बनाया नहीं जा सकता।\n"
 "%s"
 
-#: src/Application.vala:165
+#: src/Application.vala:161
 #, c-format
 msgid ""
 "File \"%s\" cannot be opened.\n"
@@ -54,69 +54,68 @@ msgstr ""
 "फ़ाइल \"%s\" खोला नहीं जा सकता।\n"
 "%s"
 
-#: src/Application.vala:175
+#: src/Application.vala:171
 msgid "It is a mountable location."
 msgstr "यह एक माउंटेबल स्थान है।"
 
-#: src/Application.vala:178
-#, fuzzy
+#: src/Application.vala:174
 msgid ""
 "It is a \"special\" file such as a socket,\n"
 " FIFO, block device, or character device."
 msgstr ""
 "यह एक \"विशेष\" फ़ाइल है जैसे सॉकेट,\n"
-" फीफो, ब्लॉक डिवाइस या वर्ण डिवाइस।"
+" फीफो, ब्लॉक डिवाइस या अक्षर डिवाइस।"
 
-#: src/Application.vala:181
+#: src/Application.vala:177
 msgid "It is an \"unknown\" file type."
 msgstr "यह एक \"अज्ञात\" फ़ाइल प्रकार है।"
 
-#: src/Application.vala:270
+#: src/Application.vala:266
 msgid "New Tab"
 msgstr "नया टैब"
 
-#: src/Application.vala:271 src/FolderManager/FileItem.vala:31
+#: src/Application.vala:267 src/FolderManager/FileItem.vala:31
 msgid "New Window"
 msgstr "नया विंडो"
 
-#: src/Application.vala:272
+#: src/Application.vala:268
 msgid "Print version info and exit"
 msgstr "प्रिन्ट संस्करण जानकारी और बाहर"
 
-#: src/Application.vala:273
+#: src/Application.vala:269
 msgid "Set of plugins"
 msgstr "प्लगइन्स का समूह"
 
-#: src/Application.vala:274
+#: src/Application.vala:270
 msgid "Current working directory"
 msgstr "वर्त्तमान फोल्डर"
 
-#: src/MainWindow.vala:131
+#: src/MainWindow.vala:133
 msgid "Code"
 msgstr "कोड"
 
-#: src/MainWindow.vala:176 src/Widgets/HeaderBar.vala:66
+#: src/MainWindow.vala:181 src/Widgets/HeaderBar.vala:66
 msgid "Find…"
 msgstr "ढूंढें…"
 
-#: src/MainWindow.vala:178
+#: src/MainWindow.vala:183
 msgid "Hide search bar"
 msgstr "सर्च बार छुपायें"
 
-#: src/MainWindow.vala:224
+#: src/MainWindow.vala:229
 msgid "Zeitgeist Datasource for Scratch"
 msgstr "स्क्रैच के लिए Zeitgeist डेटा स्रोत"
 
 #. Show a GtkFileChooserDialog
-#: src/MainWindow.vala:731
+#: src/MainWindow.vala:736
 msgid "Open some files"
 msgstr "कुछ फ़ाइल खोलें"
 
-#: src/MainWindow.vala:750
+#: src/MainWindow.vala:755
 msgid "_Cancel"
 msgstr "रद्द करें (_C)"
 
-#: src/MainWindow.vala:751
+#: src/MainWindow.vala:756
 msgid "_Open"
 msgstr "खोलें (_O)"
 
@@ -141,7 +140,7 @@ msgstr "खोलें"
 msgid "Save"
 msgstr "सहेजें"
 
-#: src/Dialogs/PreferencesDialog.vala:38 src/Widgets/HeaderBar.vala:138
+#: src/Dialogs/PreferencesDialog.vala:38 src/Widgets/HeaderBar.vala:136
 msgid "Preferences"
 msgstr "वरीयताएँ"
 
@@ -157,17 +156,17 @@ msgstr "बदलाव करने पर फाइलों को सहे�
 msgid "Tabs"
 msgstr "टैब्स"
 
-#: src/Dialogs/PreferencesDialog.vala:56 src/Widgets/FormatBar.vala:155
+#: src/Dialogs/PreferencesDialog.vala:56 src/Widgets/FormatBar.vala:156
 msgid "Automatic indentation:"
 msgstr "स्वचालित हाशिया:"
 
-#: src/Dialogs/PreferencesDialog.vala:58 src/Widgets/FormatBar.vala:149
+#: src/Dialogs/PreferencesDialog.vala:58 src/Widgets/FormatBar.vala:150
 msgid "Insert spaces instead of tabs:"
 msgstr "टैब की जगह रिक्ति डालें:"
 
-#: src/Dialogs/PreferencesDialog.vala:60 src/Widgets/FormatBar.vala:152
+#: src/Dialogs/PreferencesDialog.vala:60 src/Widgets/FormatBar.vala:153
 msgid "Tab width:"
-msgstr "टैब चौड़ाईः"
+msgstr "टैब चौड़ाई :"
 
 #: src/Dialogs/PreferencesDialog.vala:67
 msgid "Behavior"
@@ -227,25 +226,24 @@ msgstr "फॉन्ट"
 msgid "Custom font:"
 msgstr "मनपसंद फ़ॉन्ट:"
 
-#: src/FolderManager/FileItem.vala:53 src/FolderManager/FolderItem.vala:59
+#: src/FolderManager/FileItem.vala:53 src/FolderManager/FolderItem.vala:64
 msgid "Other Application…"
 msgstr "अन्य अनुप्रयोग…"
 
-#: src/FolderManager/FileItem.vala:112 src/FolderManager/FolderItem.vala:115
+#: src/FolderManager/FileItem.vala:112 src/FolderManager/FolderItem.vala:120
 msgid "Open In"
 msgstr "में खोलें"
 
-#: src/FolderManager/FileItem.vala:115 src/FolderManager/FolderItem.vala:118
-#, fuzzy
+#: src/FolderManager/FileItem.vala:115 src/FolderManager/FolderItem.vala:123
 msgid "Other Actions"
-msgstr "अन्य अनुप्रयोग…"
+msgstr "अन्य अनुप्रयोग"
 
-#: src/FolderManager/FileItem.vala:118 src/FolderManager/FolderItem.vala:121
+#: src/FolderManager/FileItem.vala:118 src/FolderManager/FolderItem.vala:126
 msgid "Rename"
 msgstr "पुनः नामकरण"
 
-#: src/FolderManager/FileItem.vala:121 src/FolderManager/FolderItem.vala:124
-#: src/FolderManager/MainFolderItem.vala:33
+#: src/FolderManager/FileItem.vala:124 src/FolderManager/FolderItem.vala:132
+#: src/FolderManager/ProjectFolderItem.vala:81
 msgid "Move to Trash"
 msgstr "रद्दी में डालें"
 
@@ -253,37 +251,37 @@ msgstr "रद्दी में डालें"
 msgid "Folders"
 msgstr "फोल्डर"
 
-#: src/FolderManager/FolderItem.vala:140
+#: src/FolderManager/FolderItem.vala:148
 msgid "Folder"
 msgstr "फ़ोल्डर"
 
-#: src/FolderManager/FolderItem.vala:143
+#: src/FolderManager/FolderItem.vala:151
 msgid "Empty File"
 msgstr "ख़ाली फ़ाइल"
 
-#: src/FolderManager/FolderItem.vala:150
+#: src/FolderManager/FolderItem.vala:158
 msgid "New"
 msgstr "नया"
 
-#: src/FolderManager/FolderItem.vala:293
+#: src/FolderManager/FolderItem.vala:322
 msgid "untitled folder"
 msgstr "अनाम फ़ोल्डर"
 
-#: src/FolderManager/FolderItem.vala:297
+#: src/FolderManager/FolderItem.vala:326
 #, c-format
 msgid "untitled folder %d"
 msgstr "अनाम फ़ोल्डर %d"
 
-#: src/FolderManager/FolderItem.vala:325
+#: src/FolderManager/FolderItem.vala:354
 msgid "new file"
 msgstr "नई फ़ाइल"
 
-#: src/FolderManager/FolderItem.vala:329
+#: src/FolderManager/FolderItem.vala:358
 #, c-format
 msgid "new file %d"
 msgstr "नई फ़ाइल %d"
 
-#: src/FolderManager/MainFolderItem.vala:30
+#: src/FolderManager/ProjectFolderItem.vala:78
 msgid "Close Folder"
 msgstr "फ़ोल्डर बंद करें"
 
@@ -398,7 +396,7 @@ msgstr "जारी रखें"
 msgid "Templates"
 msgstr "नमूने"
 
-#: src/Widgets/DocumentView.vala:92
+#: src/Widgets/DocumentView.vala:132
 #, c-format
 msgid "Text file from %s"
 msgstr "टेक्स्ट फाइलें %s"
@@ -411,29 +409,29 @@ msgstr "सिंटेक्स हाईलाइटिंग"
 msgid "Line number"
 msgstr "पंक्ति नंबर"
 
-#: src/Widgets/FormatBar.vala:95
+#: src/Widgets/FormatBar.vala:96
 msgid "Filter languages"
 msgstr "भाषाएं फ़िल्टर करें"
 
-#: src/Widgets/FormatBar.vala:117
+#: src/Widgets/FormatBar.vala:118
 msgid "Plain Text"
 msgstr "सादा पाठ"
 
-#: src/Widgets/FormatBar.vala:199
+#: src/Widgets/FormatBar.vala:200
 #, c-format
 msgid "%d Space"
 msgid_plural "%d Spaces"
-msgstr[0] "%d स्पेस बनायें"
-msgstr[1] ""
+msgstr[0] "%d स्पेस"
+msgstr[1] "%d स्पेस"
 
-#: src/Widgets/FormatBar.vala:201
+#: src/Widgets/FormatBar.vala:202
 #, c-format
 msgid "%d Tab"
 msgid_plural "%d Tabs"
 msgstr[0] "%d टैब"
 msgstr[1] "%d टैब"
 
-#: src/Widgets/FormatBar.vala:217
+#: src/Widgets/FormatBar.vala:218
 msgid "Go To Line:"
 msgstr "पंक्ति पर जायें:"
 
@@ -477,27 +475,31 @@ msgstr "ज़ूम 1:1"
 msgid "Zoom In"
 msgstr "ज़ूम इन"
 
-#: src/Widgets/HeaderBar.vala:100
+#: src/Widgets/HeaderBar.vala:98
 msgid "High Contrast"
 msgstr "अधिक कंट्रास्ट"
 
-#: src/Widgets/HeaderBar.vala:110
+#: src/Widgets/HeaderBar.vala:106
 msgid "Solarized Light"
 msgstr "सोलारिज्ड लाइट"
 
-#: src/Widgets/HeaderBar.vala:120
+#: src/Widgets/HeaderBar.vala:114
 msgid "Solarized Dark"
 msgstr "सोलारिज्ड डार्क"
 
-#: src/Widgets/HeaderBar.vala:130
+#: src/Widgets/HeaderBar.vala:124
+msgid "Toggle Sidebar"
+msgstr "बाजू की पट्टी टॉगल करें"
+
+#: src/Widgets/HeaderBar.vala:128
 msgid "Add New View"
 msgstr "नया दृश्य जोड़ें"
 
-#: src/Widgets/HeaderBar.vala:134
+#: src/Widgets/HeaderBar.vala:132
 msgid "Remove Current View"
 msgstr "वर्तमान दृश्य को निकालें"
 
-#: src/Widgets/HeaderBar.vala:160
+#: src/Widgets/HeaderBar.vala:159
 msgid "Menu"
 msgstr "मेन्यू"
 
@@ -517,22 +519,25 @@ msgstr "पिछला खोजें"
 msgid "Cyclic Search"
 msgstr "चक्रीय ख़ोज"
 
-#: src/Widgets/SearchBar.vala:87
+#: src/Widgets/SearchBar.vala:91
 msgid "Replace With"
 msgstr "के साथ बदलें"
 
-#: src/Widgets/SearchBar.vala:90
+#: src/Widgets/SearchBar.vala:94
 msgid "Replace"
 msgstr "बदलें"
 
-#: src/Widgets/SearchBar.vala:93
+#: src/Widgets/SearchBar.vala:97
 msgid "Replace all"
 msgstr "सबको प्रतिस्थापित करें"
 
-#: src/Widgets/SourceView.vala:329
-#, fuzzy
+#: src/Widgets/SourceView.vala:357
 msgid "Sort Selected Lines"
-msgstr "चयनित पाठ के लिए"
+msgstr "चयनित लाइनों को क्रमबद्ध करें"
+
+#: src/Widgets/SourceView.vala:364
+msgid "Toggle Comment"
+msgstr "टिप्पणी टॉगल करें"
 
 #: src/Widgets/WelcomeView.vala:26
 msgid "No Files Open"
@@ -567,9 +572,8 @@ msgid "Add a project folder to the sidebar."
 msgstr "प्रोजेक्ट फोल्डर को साइडबार में जोड़े।"
 
 #: plugins/pastebin/pastebin_dialog.vala:249
-#, fuzzy
 msgid "Share via Pastebin"
-msgstr "पेस्टबिन  के द्वारा  साझा करे"
+msgstr "पेस्टबिन  के द्वारा साझा करें"
 
 #: plugins/pastebin/pastebin_dialog.vala:256
 msgid "Name:"
@@ -580,8 +584,8 @@ msgid "Format:"
 msgstr "प्रारूप:"
 
 #: plugins/pastebin/pastebin_dialog.vala:264
-msgid "Others..."
-msgstr "अन्य..."
+msgid "Others…"
+msgstr "अन्य…"
 
 #: plugins/pastebin/pastebin_dialog.vala:286
 msgid "Expiry time:"
@@ -655,12 +659,12 @@ msgstr "चिपकाएं"
 msgid "Web Preview"
 msgstr "वेब पूर्वावलोकन"
 
-#: plugins/browser-preview/browser-preview.vala:74
-#: plugins/browser-preview/browser-preview.vala:100
+#: plugins/browser-preview/browser-preview.vala:72
+#: plugins/browser-preview/browser-preview.vala:98
 msgid "Show Preview"
 msgstr "पूर्वावलोकन दिखाएँ"
 
-#: plugins/browser-preview/browser-preview.vala:92
+#: plugins/browser-preview/browser-preview.vala:90
 msgid "Hide Preview"
 msgstr "पूर्वावलोकन छुपाएँ"
 
@@ -874,9 +878,6 @@ msgstr "आइकॉन थीम लोड नहीं किया जा स
 
 #~ msgid "Normal text"
 #~ msgstr "सामान्य पाठ"
-
-#~ msgid "Sidebar"
-#~ msgstr "बाजू की पट्टी"
 
 #~ msgid "Editor:"
 #~ msgstr "संपादकः"

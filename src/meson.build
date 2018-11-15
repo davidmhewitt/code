@@ -13,7 +13,6 @@ config_header = configure_file(
 
 code_files = files(
     'Application.vala',
-    'DrawSpacesUtils.vala',
     'MainWindow.vala',
     'Utils.vala',
     'Dialogs/PreferencesDialog.vala',
@@ -23,7 +22,7 @@ code_files = files(
     'FolderManager/FileView.vala',
     'FolderManager/FolderItem.vala',
     'FolderManager/Item.vala',
-    'FolderManager/MainFolderItem.vala',
+    'FolderManager/ProjectFolderItem.vala',
     'Services/CommentToggler.vala',
     'Services/Document.vala',
     'Services/FileHandler.vala',
